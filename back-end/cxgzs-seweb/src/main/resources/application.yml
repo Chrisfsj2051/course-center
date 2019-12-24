@@ -1,0 +1,30 @@
+#默认使用配置
+spring:
+  profiles:
+    active: dev
+
+#公共配置与profiles选择无关 mapperLocations指的路径是src/main/resources
+mybatis:
+  typeAliasesPackage: com.cxgzs.seweb.model
+  mapperLocations: classpath*:com/cxgzs/seweb/mapping/*.xml
+
+---
+
+#开发配置
+spring:
+  profiles: dev
+
+  datasource:
+    url: jdbc:mysql://139.224.137.85:3306/temp?useUnicode=true&characterEncoding=utf8&serverTimezone=Hongkong
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: file:../files, file:files, file:/home/project/cxgzs-seweb/files
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB

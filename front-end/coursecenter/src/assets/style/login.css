@@ -1,0 +1,45 @@
+#loginmenu{
+  padding: 2%;
+  float: right;
+  width:23%;
+  background-color: white;
+  min-height: 670px;
+  height: 100%}
+#loginform{
+  margin: 50% auto;
+}
+body{
+  background-image: url(../image/fruit.jpg);
+  background-size:cover;
+  opacity: 0.9;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+}
+.iconfont{
+  font-size: 40px;
+  margin-right: 5px;
+}
+/*设置输入块*/
+#username{
+  height: 100%;
+
+}
+#password{
+  height: 100%;
+}
+
+
+.el-input__inner{
+  line-height: 5px;
+
+}
+.el-input{
+  width: 70%;
+
+}
+.el-button{
+
+}
+

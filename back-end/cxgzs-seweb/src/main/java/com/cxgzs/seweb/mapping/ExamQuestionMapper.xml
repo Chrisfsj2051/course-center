@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgzs.seweb.dao.ExamQuestionMapper">
+  <resultMap id="BaseResultMap" type="com.cxgzs.seweb.model.ExamQuestion">
+    <id column="question_id" jdbcType="INTEGER" property="questionId" />
+    <id column="paper_id" jdbcType="INTEGER" property="paperId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="paper_type" jdbcType="INTEGER" property="paperType" />
+    <result column="lesson_id" jdbcType="INTEGER" property="lessonId" />
+    <result column="question_type" jdbcType="INTEGER" property="questionType" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
+    <result column="choice" jdbcType="VARCHAR" property="choice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    question_id, paper_id, title, paper_type, lesson_id, question_type, content, answer, 
+    choice
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.cxgzs.seweb.model.ExamQuestionKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from exam_question
+    where question_id = #{questionId,jdbcType=INTEGER}
+      and paper_id = #{paperId,jdbcType=INTEGER}
+  </select>
+  <select id="selectTitleByPaperId" parameterType="java.lang.Integer" resultType="java.lang.String" >
+    select
+    title
+    from exam_question
+    where paper_id = #{questionId,jdbcType=INTEGER}
+    limit 1
+  </select>
+  <select id="selectPaperTypeByPaperId" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
+    select
+    paper_type
+    from exam_question
+    where paper_id = #{questionId,jdbcType=INTEGER}
+    limit 1
+  </select>
+  <select id="selectCountByPaperId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select
+    count(*)
+    from exam_question
+    where paper_id = #{paperId,jdbcType=INTEGER}
+  </select>
+  <select id="selectPaperIdByLessonId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select
+    paper_id
+    from exam_question
+    where lesson_id = #{lessonId,jdbcType=INTEGER}
+    group by (paper_id)
+  </select>
+  <select id="selectPaperIdByLessonIdAndType" resultType="java.lang.Integer">
+    select
+    paper_id
+    from exam_question
+    where lesson_id = #{lessonId,jdbcType=INTEGER}
+    and paper_type = #{paperType,jdbcType=INTEGER}
+    group by (paper_id)
+  </select>
+    <select id="selectPaperIdByLessonIdAndTypeLimited" resultType="java.lang.Integer">
+    select
+    paper_id
+    from exam_question
+    where lesson_id = #{lessonId,jdbcType=INTEGER}
+    and paper_type = #{paperType,jdbcType=INTEGER}
+    group by (paper_id)
+    limit #{start,jdbcType=INTEGER},#{count,jdbcType=INTEGER}
+  </select>
+  <select id="selectQuestionIdByPaperId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select
+    question_id
+    from exam_question
+    where paper_id = #{paperId,jdbcType=INTEGER}
+    order by question_id
+    asc
+  </select>
+  <select id="selectMaxId"  resultType="java.lang.Integer">
+    select
+    max(paper_id)
+    from exam_question
+  </select>
+  <select id="selectPaperIdByTitle" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select
+    paper_id
+    from exam_question
+    where title = #{title,jdbcType=VARCHAR}
+    limit 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.cxgzs.seweb.model.ExamQuestionKey">
+    delete from exam_question
+    where question_id = #{questionId,jdbcType=INTEGER}
+      and paper_id = #{paperId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPaperId" parameterType="java.lang.Integer">
+    delete from exam_question
+    where paper_id = #{paperId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cxgzs.seweb.model.ExamQuestion">
+    insert into exam_question (question_id, paper_id, title, 
+      paper_type, lesson_id, question_type, 
+      content, answer, choice
+      )
+    values (#{questionId,jdbcType=INTEGER}, #{paperId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{paperType,jdbcType=INTEGER}, #{lessonId,jdbcType=INTEGER}, #{questionType,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, #{choice,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cxgzs.seweb.model.ExamQuestion">
+    insert into exam_question
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="questionId != null">
+        question_id,
+      </if>
+      <if test="paperId != null">
+        paper_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="paperType != null">
+        paper_type,
+      </if>
+      <if test="lessonId != null">
+        lesson_id,
+      </if>
+      <if test="questionType != null">
+        question_type,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="choice != null">
+        choice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="questionId != null">
+        #{questionId,jdbcType=INTEGER},
+      </if>
+      <if test="paperId != null">
+        #{paperId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="paperType != null">
+        #{paperType,jdbcType=INTEGER},
+      </if>
+      <if test="lessonId != null">
+        #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="questionType != null">
+        #{questionType,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="choice != null">
+        #{choice,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cxgzs.seweb.model.ExamQuestion">
+    update exam_question
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="paperType != null">
+        paper_type = #{paperType,jdbcType=INTEGER},
+      </if>
+      <if test="lessonId != null">
+        lesson_id = #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="questionType != null">
+        question_type = #{questionType,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="choice != null">
+        choice = #{choice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where question_id = #{questionId,jdbcType=INTEGER}
+      and paper_id = #{paperId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cxgzs.seweb.model.ExamQuestion">
+    update exam_question
+    set title = #{title,jdbcType=VARCHAR},
+      paper_type = #{paperType,jdbcType=INTEGER},
+      lesson_id = #{lessonId,jdbcType=INTEGER},
+      question_type = #{questionType,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      choice = #{choice,jdbcType=VARCHAR}
+    where question_id = #{questionId,jdbcType=INTEGER}
+      and paper_id = #{paperId,jdbcType=INTEGER}
+  </update>
+</mapper>

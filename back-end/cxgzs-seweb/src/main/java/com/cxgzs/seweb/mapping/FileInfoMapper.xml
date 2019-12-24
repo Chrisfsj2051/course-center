@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgzs.seweb.dao.FileInfoMapper">
+  <resultMap id="BaseResultMap" type="com.cxgzs.seweb.model.FileInfo">
+    <id column="file_id" jdbcType="INTEGER" property="fileId" />
+    <result column="file_address" jdbcType="VARCHAR" property="fileAddress" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="file_by_id" jdbcType="VARCHAR" property="fileById" />
+    <result column="down_times" jdbcType="INTEGER" property="downTimes" />
+    <result column="belong_lesson" jdbcType="INTEGER" property="belongLesson" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    file_id, file_address, file_name, file_by_id, down_times, belong_lesson, type
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from file_info
+    where file_id = #{fileId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAddrByFileName" parameterType="java.lang.String" resultType="java.lang.String" >
+    select
+    file_address
+    from file_info
+    where file_name = #{fileId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByLessonIdAndType" resultType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from file_info
+    where belong_lesson = #{lessonId,jdbcType=INTEGER}
+      and `type`= #{type,jdbcType=INTEGER}
+      order by file_id desc
+  </select>
+
+  <select id="selectByUrl" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from file_info
+    where file_address = #{url,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from file_info
+    where file_id = #{fileId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cxgzs.seweb.model.FileInfo">
+    insert into file_info (file_id, file_address, file_name,
+      file_by_id, down_times, belong_lesson,
+      type)
+    values (#{fileId,jdbcType=INTEGER}, #{fileAddress,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR},
+      #{fileById,jdbcType=VARCHAR}, #{downTimes,jdbcType=INTEGER}, #{belongLesson,jdbcType=INTEGER},
+      #{type,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cxgzs.seweb.model.FileInfo">
+    insert into file_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fileId != null">
+        file_id,
+      </if>
+      <if test="fileAddress != null">
+        file_address,
+      </if>
+      <if test="fileName != null">
+        file_name,
+      </if>
+      <if test="fileById != null">
+        file_by_id,
+      </if>
+      <if test="downTimes != null">
+        down_times,
+      </if>
+      <if test="belongLesson != null">
+        belong_lesson,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fileId != null">
+        #{fileId,jdbcType=INTEGER},
+      </if>
+      <if test="fileAddress != null">
+        #{fileAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileById != null">
+        #{fileById,jdbcType=VARCHAR},
+      </if>
+      <if test="downTimes != null">
+        #{downTimes,jdbcType=INTEGER},
+      </if>
+      <if test="belongLesson != null">
+        #{belongLesson,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cxgzs.seweb.model.FileInfo">
+    update file_info
+    <set>
+      <if test="fileAddress != null">
+        file_address = #{fileAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileById != null">
+        file_by_id = #{fileById,jdbcType=VARCHAR},
+      </if>
+      <if test="downTimes != null">
+        down_times = #{downTimes,jdbcType=INTEGER},
+      </if>
+      <if test="belongLesson != null">
+        belong_lesson = #{belongLesson,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where file_id = #{fileId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cxgzs.seweb.model.FileInfo">
+    update file_info
+    set file_address = #{fileAddress,jdbcType=VARCHAR},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      file_by_id = #{fileById,jdbcType=VARCHAR},
+      down_times = #{downTimes,jdbcType=INTEGER},
+      belong_lesson = #{belongLesson,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER}
+    where file_id = #{fileId,jdbcType=INTEGER}
+  </update>
+</mapper>

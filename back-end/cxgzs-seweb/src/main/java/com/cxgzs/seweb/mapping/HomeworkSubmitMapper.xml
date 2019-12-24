@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgzs.seweb.dao.HomeworkSubmitMapper">
+  <resultMap id="BaseResultMap" type="com.cxgzs.seweb.model.HomeworkSubmit">
+    <constructor>
+      <idArg column="homework_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="sno" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="file_address" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="upload_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="score" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="suggest" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    homework_id, sno, file_address, upload_time, score, suggest
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.cxgzs.seweb.model.HomeworkSubmitKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from homework_submit
+    where homework_id = #{homeworkId,jdbcType=INTEGER}
+      and sno = #{sno,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByHomeworkId" parameterType="com.cxgzs.seweb.model.HomeworkSubmitKey" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from homework_submit
+    where homework_id = #{homeworkId,jdbcType=INTEGER}
+    ORDER BY cast(sno as decimal)
+  </select>
+  <select id="selectByStudentId" parameterType="com.cxgzs.seweb.model.HomeworkSubmitKey" resultType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from homework_submit
+    where sno = #{sno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.cxgzs.seweb.model.HomeworkSubmitKey">
+    delete from homework_submit
+    where homework_id = #{homeworkId,jdbcType=INTEGER}
+      and sno = #{sno,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByHomeworkId" parameterType="com.cxgzs.seweb.model.HomeworkSubmitKey">
+    delete from homework_submit
+    where homework_id = #{homeworkId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cxgzs.seweb.model.HomeworkSubmit">
+    insert into homework_submit (homework_id, sno, file_address, 
+      upload_time, score, suggest
+      )
+    values (#{homeworkId,jdbcType=INTEGER}, #{sno,jdbcType=VARCHAR}, #{fileAddress,jdbcType=VARCHAR}, 
+      #{uploadTime,jdbcType=TIMESTAMP}, #{score,jdbcType=INTEGER}, #{suggest,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cxgzs.seweb.model.HomeworkSubmit">
+    insert into homework_submit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="homeworkId != null">
+        homework_id,
+      </if>
+      <if test="sno != null">
+        sno,
+      </if>
+      <if test="fileAddress != null">
+        file_address,
+      </if>
+      <if test="uploadTime != null">
+        upload_time,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="suggest != null">
+        suggest,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="homeworkId != null">
+        #{homeworkId,jdbcType=INTEGER},
+      </if>
+      <if test="sno != null">
+        #{sno,jdbcType=VARCHAR},
+      </if>
+      <if test="fileAddress != null">
+        #{fileAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime != null">
+        #{uploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="suggest != null">
+        #{suggest,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cxgzs.seweb.model.HomeworkSubmit">
+    update homework_submit
+    <set>
+      <if test="fileAddress != null">
+        file_address = #{fileAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime != null">
+        upload_time = #{uploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="suggest != null">
+        suggest = #{suggest,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where homework_id = #{homeworkId,jdbcType=INTEGER}
+      and sno = #{sno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cxgzs.seweb.model.HomeworkSubmit">
+    update homework_submit
+    set file_address = #{fileAddress,jdbcType=VARCHAR},
+      upload_time = #{uploadTime,jdbcType=TIMESTAMP},
+      score = #{score,jdbcType=INTEGER},
+      suggest = #{suggest,jdbcType=VARCHAR}
+    where homework_id = #{homeworkId,jdbcType=INTEGER}
+      and sno = #{sno,jdbcType=VARCHAR}
+  </update>
+</mapper>

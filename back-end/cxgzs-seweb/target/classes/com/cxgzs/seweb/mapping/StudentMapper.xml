@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgzs.seweb.dao.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.cxgzs.seweb.model.Student">
+    <id column="sno" jdbcType="VARCHAR" property="sno" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="tel_num" jdbcType="VARCHAR" property="telNum" />
+    <result column="college" jdbcType="VARCHAR" property="college" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="enrollment_year" jdbcType="INTEGER" property="enrollmentYear" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="lesson_id" jdbcType="INTEGER" property="lessonId" />
+    <result column="pho_url" jdbcType="VARCHAR" property="phoUrl" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sno, name, password, gender, tel_num, college, major, enrollment_year, class_id, 
+    lesson_id, pho_url, nickname
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where sno = #{sno,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllByLessonId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from student
+    where lesson_id = #{lesson_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from student
+    where sno = #{sno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cxgzs.seweb.model.Student">
+    insert into student (sno, name, password, 
+      gender, tel_num, college, 
+      major, enrollment_year, class_id, 
+      lesson_id, pho_url, nickname
+      )
+    values (#{sno,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{telNum,jdbcType=VARCHAR}, #{college,jdbcType=VARCHAR}, 
+      #{major,jdbcType=VARCHAR}, #{enrollmentYear,jdbcType=INTEGER}, #{classId,jdbcType=INTEGER}, 
+      #{lessonId,jdbcType=INTEGER}, #{phoUrl,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cxgzs.seweb.model.Student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sno != null">
+        sno,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="telNum != null">
+        tel_num,
+      </if>
+      <if test="college != null">
+        college,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="enrollmentYear != null">
+        enrollment_year,
+      </if>
+      <if test="classId != null">
+        class_id,
+      </if>
+      <if test="lessonId != null">
+        lesson_id,
+      </if>
+      <if test="phoUrl != null">
+        pho_url,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sno != null">
+        #{sno,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="telNum != null">
+        #{telNum,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null">
+        #{college,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="enrollmentYear != null">
+        #{enrollmentYear,jdbcType=INTEGER},
+      </if>
+      <if test="classId != null">
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="lessonId != null">
+        #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="phoUrl != null">
+        #{phoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cxgzs.seweb.model.Student">
+    update student
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="telNum != null">
+        tel_num = #{telNum,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null">
+        college = #{college,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="enrollmentYear != null">
+        enrollment_year = #{enrollmentYear,jdbcType=INTEGER},
+      </if>
+      <if test="classId != null">
+        class_id = #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="lessonId != null">
+        lesson_id = #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="phoUrl != null">
+        pho_url = #{phoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sno = #{sno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cxgzs.seweb.model.Student">
+    update student
+    set name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      tel_num = #{telNum,jdbcType=VARCHAR},
+      college = #{college,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      enrollment_year = #{enrollmentYear,jdbcType=INTEGER},
+      class_id = #{classId,jdbcType=INTEGER},
+      lesson_id = #{lessonId,jdbcType=INTEGER},
+      pho_url = #{phoUrl,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR}
+    where sno = #{sno,jdbcType=VARCHAR}
+  </update>
+</mapper>

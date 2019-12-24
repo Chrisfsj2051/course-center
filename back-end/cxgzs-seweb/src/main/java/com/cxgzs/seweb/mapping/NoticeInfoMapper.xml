@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgzs.seweb.dao.NoticeInfoMapper">
+  <resultMap id="BaseResultMap" type="com.cxgzs.seweb.model.NoticeInfo">
+    <id column="notice_id" jdbcType="INTEGER" property="noticeId" />
+    <result column="lesson_id" jdbcType="INTEGER" property="lessonId" />
+    <result column="uno" jdbcType="VARCHAR" property="uno" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    notice_id, lesson_id, uno, title, content, publish_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from notice_info
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByLessonId" parameterType="java.lang.Integer" resultType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from notice_info
+    where lesson_id = #{lessonId,jdbcType=INTEGER}
+    order by publish_time desc
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer">
+    select
+    count(*)
+    from notice_info
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from notice_info
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cxgzs.seweb.model.NoticeInfo">
+    insert into notice_info (notice_id, lesson_id, uno, 
+      title, content, publish_time
+      )
+    values (#{noticeId,jdbcType=INTEGER}, #{lessonId,jdbcType=INTEGER}, #{uno,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{publishTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cxgzs.seweb.model.NoticeInfo">
+    insert into notice_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="noticeId != null">
+        notice_id,
+      </if>
+      <if test="lessonId != null">
+        lesson_id,
+      </if>
+      <if test="uno != null">
+        uno,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="publishTime != null">
+        publish_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="noticeId != null">
+        #{noticeId,jdbcType=INTEGER},
+      </if>
+      <if test="lessonId != null">
+        #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="uno != null">
+        #{uno,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null">
+        #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cxgzs.seweb.model.NoticeInfo">
+    update notice_info
+    <set>
+      <if test="lessonId != null">
+        lesson_id = #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="uno != null">
+        uno = #{uno,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null">
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cxgzs.seweb.model.NoticeInfo">
+    update notice_info
+    set lesson_id = #{lessonId,jdbcType=INTEGER},
+      uno = #{uno,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP}
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </update>
+</mapper>

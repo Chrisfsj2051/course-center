@@ -1,0 +1,70 @@
+#downloadButton{
+  float: right;
+  margin-bottom: 5px;
+}
+.Actsidebar{
+  height: 600px;
+}
+.el-scrollbar__wrap{
+  overflow-x:hidden;
+}
+#question_title{
+  display: inline;
+  position: relative;
+  right: 100px;
+}
+
+.paging{
+  position: relative;
+  right:50px;
+  top:20px
+}
+
+.post_right{
+  margin-top: 20px;
+}
+.post_right_button{
+  margin-top: 20px;
+}
+.post_content{
+   text-align: left;
+  word-break:break-all;
+ }
+
+.reply_post_content{
+  text-align: left;
+  background-color: #DCDFE6;
+  word-break:break-all;
+}
+
+.upload{
+  position: relative;
+  top: 200px;
+
+}
+.send{
+  float: right;
+}
+#image{
+  margin-top: 5%;
+}
+
+.delete_post{
+  position: relative;
+  right: 50px;
+}
+
+.post{
+  background-color: #F2F6FC;
+
+}
+.title{
+  position: relative;
+  right: 2%;
+}
+
+
+
+
+
+

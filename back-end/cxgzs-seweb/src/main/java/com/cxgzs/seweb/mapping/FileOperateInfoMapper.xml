@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgzs.seweb.dao.FileOperateInfoMapper">
+  <resultMap id="BaseResultMap" type="com.cxgzs.seweb.model.FileOperateInfo">
+    <id column="file_operate_id" jdbcType="INTEGER" property="fileOperateId" />
+    <result column="file_id" jdbcType="INTEGER" property="fileId" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+    <result column="operate_type" jdbcType="INTEGER" property="operateType" />
+    <result column="uno" jdbcType="VARCHAR" property="uno" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    file_operate_id, file_id, operate_time, operate_type, uno
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from file_operate_info
+    where file_operate_id = #{fileOperateId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByFileIdAndType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from file_operate_info
+    where file_id = #{fileId,jdbcType=INTEGER}
+        and operate_type = #{operateType,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByUserId" parameterType="java.lang.String" resultType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from file_operate_info
+    where uno = #{uno,jdbcType=VARCHAR}
+  </select>
+  <select id="selectCountByUserId" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select
+    count(*)
+    from file_operate_info
+    where uno = #{uno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from file_operate_info
+    where file_operate_id = #{fileOperateId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByFileId" parameterType="java.lang.Integer">
+    delete from file_operate_info
+    where file_id = #{fileId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cxgzs.seweb.model.FileOperateInfo">
+    insert into file_operate_info (file_operate_id, file_id, operate_time,
+      operate_type, uno)
+    values (#{fileOperateId,jdbcType=INTEGER}, #{fileId,jdbcType=INTEGER}, #{operateTime,jdbcType=TIMESTAMP},
+      #{operateType,jdbcType=INTEGER}, #{uno,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cxgzs.seweb.model.FileOperateInfo">
+    insert into file_operate_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fileOperateId != null">
+        file_operate_id,
+      </if>
+      <if test="fileId != null">
+        file_id,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+      <if test="operateType != null">
+        operate_type,
+      </if>
+      <if test="uno != null">
+        uno,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fileOperateId != null">
+        #{fileOperateId,jdbcType=INTEGER},
+      </if>
+      <if test="fileId != null">
+        #{fileId,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateType != null">
+        #{operateType,jdbcType=INTEGER},
+      </if>
+      <if test="uno != null">
+        #{uno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cxgzs.seweb.model.FileOperateInfo">
+    update file_operate_info
+    <set>
+      <if test="fileId != null">
+        file_id = #{fileId,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateType != null">
+        operate_type = #{operateType,jdbcType=INTEGER},
+      </if>
+      <if test="uno != null">
+        uno = #{uno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where file_operate_id = #{fileOperateId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cxgzs.seweb.model.FileOperateInfo">
+    update file_operate_info
+    set file_id = #{fileId,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      operate_type = #{operateType,jdbcType=INTEGER},
+      uno = #{uno,jdbcType=VARCHAR}
+    where file_operate_id = #{fileOperateId,jdbcType=INTEGER}
+  </update>
+</mapper>

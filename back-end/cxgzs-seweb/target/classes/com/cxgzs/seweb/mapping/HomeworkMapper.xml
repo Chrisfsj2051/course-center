@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgzs.seweb.dao.HomeworkMapper">
+  <resultMap id="BaseResultMap" type="com.cxgzs.seweb.model.Homework">
+    <id column="homework_id" jdbcType="INTEGER" property="homeworkId" />
+    <result column="lesson_id" jdbcType="INTEGER" property="lessonId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="release_time" jdbcType="TIMESTAMP" property="releaseTime" />
+    <result column="deadline" jdbcType="TIMESTAMP" property="deadline" />
+    <result column="sub_times" jdbcType="INTEGER" property="subTimes" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    homework_id, lesson_id, title, content, release_time, deadline, sub_times
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from homework
+    where homework_id = #{homeworkId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByLessonId" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from homework
+    where lesson_id = #{lessonId,jdbcType=INTEGER}
+    order by release_time desc
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from homework
+    where homework_id = #{homeworkId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cxgzs.seweb.model.Homework">
+    insert into homework (homework_id, lesson_id, title, 
+      content, release_time, deadline, 
+      sub_times)
+    values (#{homeworkId,jdbcType=INTEGER}, #{lessonId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{releaseTime,jdbcType=TIMESTAMP}, #{deadline,jdbcType=TIMESTAMP}, 
+      #{subTimes,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cxgzs.seweb.model.Homework">
+    insert into homework
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="homeworkId != null">
+        homework_id,
+      </if>
+      <if test="lessonId != null">
+        lesson_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="releaseTime != null">
+        release_time,
+      </if>
+      <if test="deadline != null">
+        deadline,
+      </if>
+      <if test="subTimes != null">
+        sub_times,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="homeworkId != null">
+        #{homeworkId,jdbcType=INTEGER},
+      </if>
+      <if test="lessonId != null">
+        #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseTime != null">
+        #{releaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deadline != null">
+        #{deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subTimes != null">
+        #{subTimes,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cxgzs.seweb.model.Homework">
+    update homework
+    <set>
+      <if test="lessonId != null">
+        lesson_id = #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseTime != null">
+        release_time = #{releaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deadline != null">
+        deadline = #{deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subTimes != null">
+        sub_times = #{subTimes,jdbcType=INTEGER},
+      </if>
+    </set>
+    where homework_id = #{homeworkId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cxgzs.seweb.model.Homework">
+    update homework
+    set lesson_id = #{lessonId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      release_time = #{releaseTime,jdbcType=TIMESTAMP},
+      deadline = #{deadline,jdbcType=TIMESTAMP},
+      sub_times = #{subTimes,jdbcType=INTEGER}
+    where homework_id = #{homeworkId,jdbcType=INTEGER}
+  </update>
+</mapper>

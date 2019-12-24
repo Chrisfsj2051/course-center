@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgzs.seweb.dao.LessonMapper">
+  <resultMap id="BaseResultMap" type="com.cxgzs.seweb.model.Lesson">
+    <id column="lesson_id" jdbcType="INTEGER" property="lessonId" />
+    <result column="lesson_name" jdbcType="VARCHAR" property="lessonName" />
+    <result column="tno" jdbcType="VARCHAR" property="tno" />
+    <result column="release_year" jdbcType="INTEGER" property="releaseYear" />
+    <result column="release_semester" jdbcType="INTEGER" property="releaseSemester" />
+    <result column="lesson_intro" jdbcType="VARCHAR" property="lessonIntro" />
+    <result column="syllabus" jdbcType="VARCHAR" property="syllabus" />
+    <result column="pho_url" jdbcType="VARCHAR" property="phoUrl" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    lesson_id, lesson_name, tno, release_year, release_semester, lesson_intro, syllabus, pho_url
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lesson
+    where lesson_id = #{lessonId,jdbcType=INTEGER}
+  </select>
+  <select id="selectLidByTno" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select
+    lesson_id
+    from lesson
+    where tno = #{tno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lesson
+    where lesson_id = #{lessonId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cxgzs.seweb.model.Lesson">
+    insert into lesson (lesson_id, lesson_name, tno, 
+      release_year, release_semester, lesson_intro, 
+      syllabus, pho_url)
+    values (#{lessonId,jdbcType=INTEGER}, #{lessonName,jdbcType=VARCHAR}, #{tno,jdbcType=VARCHAR}, 
+      #{releaseYear,jdbcType=INTEGER}, #{releaseSemester,jdbcType=INTEGER}, #{lessonIntro,jdbcType=VARCHAR}, 
+      #{syllabus,jdbcType=VARCHAR}, #{phoUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cxgzs.seweb.model.Lesson">
+    insert into lesson
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lessonId != null">
+        lesson_id,
+      </if>
+      <if test="lessonName != null">
+        lesson_name,
+      </if>
+      <if test="tno != null">
+        tno,
+      </if>
+      <if test="releaseYear != null">
+        release_year,
+      </if>
+      <if test="releaseSemester != null">
+        release_semester,
+      </if>
+      <if test="lessonIntro != null">
+        lesson_intro,
+      </if>
+      <if test="syllabus != null">
+        syllabus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lessonId != null">
+        #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="lessonName != null">
+        #{lessonName,jdbcType=VARCHAR},
+      </if>
+      <if test="tno != null">
+        #{tno,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseYear != null">
+        #{releaseYear,jdbcType=INTEGER},
+      </if>
+      <if test="releaseSemester != null">
+        #{releaseSemester,jdbcType=INTEGER},
+      </if>
+      <if test="lessonIntro != null">
+        #{lessonIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="syllabus != null">
+        #{syllabus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cxgzs.seweb.model.Lesson">
+    update lesson
+    <set>
+      <if test="lessonName != null">
+        lesson_name = #{lessonName,jdbcType=VARCHAR},
+      </if>
+      <if test="tno != null">
+        tno = #{tno,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseYear != null">
+        release_year = #{releaseYear,jdbcType=INTEGER},
+      </if>
+      <if test="releaseSemester != null">
+        release_semester = #{releaseSemester,jdbcType=INTEGER},
+      </if>
+      <if test="lessonIntro != null">
+        lesson_intro = #{lessonIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="syllabus != null">
+        syllabus = #{syllabus,jdbcType=VARCHAR},
+      </if>
+      <if test="phoUrl != null">
+        pho_url = #{phoUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where lesson_id = #{lessonId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cxgzs.seweb.model.Lesson">
+    update lesson
+    set lesson_name = #{lessonName,jdbcType=VARCHAR},
+      tno = #{tno,jdbcType=VARCHAR},
+      release_year = #{releaseYear,jdbcType=INTEGER},
+      release_semester = #{releaseSemester,jdbcType=INTEGER},
+      lesson_intro = #{lessonIntro,jdbcType=VARCHAR},
+      syllabus = #{syllabus,jdbcType=VARCHAR},
+      pho_url = #{phoUrl,jdbcType=VARCHAR}
+    where lesson_id = #{lessonId,jdbcType=INTEGER}
+  </update>
+</mapper>
